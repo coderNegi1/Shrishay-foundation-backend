@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: shrishay-backend
+    env: node
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_EMAIL
+        value: admin@shrishay.org
+      - key: ADMIN_PASSWORD
+        value: Admin@123456
+      - key: FRONTEND_URL
+        value: https://your-frontend-url.vercel.app
+      - key: MAX_FILE_SIZE
+        value: 10485760
+      - key: ALLOWED_IMAGE_TYPES
+        value: image/jpeg,image/png,image/gif,image/webp
+      - key: ALLOWED_VIDEO_TYPES
+        value: video/mp4,video/mpeg,video/quicktime
+      - key: JWT_REFRESH_SECRET
+        sync: false
+      - key: JWT_EXPIRE
+        value: 15m
+      - key: JWT_REFRESH_EXPIRE
+        value: 7d
+      - key: COOKIE_EXPIRE
+        value: 7
+
+databases:
+  - name: shrishay-mongodb
+    databaseName: shrishay_foundation
+    user: shrishay_user

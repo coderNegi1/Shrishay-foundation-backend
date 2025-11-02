@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: shrishay-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: shrishay-foundation
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - shrishay-network
+
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shrishay-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      MONGODB_URI: mongodb://admin:admin123@mongodb:27017/shrishay-foundation?authSource=admin
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./uploads:/app/uploads
+    depends_on:
+      - mongodb
+    networks:
+      - shrishay-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  shrishay-network:
+    driver: bridge
