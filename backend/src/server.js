@@ -14,10 +14,16 @@ dotenv.config();
 connectDB();
 
 const PORT = process.env.PORT || 5000;
+app.get("/", (req, res) => {
+  res.send("✅ Shrishay Foundation Backend is Live!");
+});
 
 // Start server
 const server = app.listen(PORT, () => {
   console.log(`✅ Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+});
+app.get("/healthz", (req, res) => {
+  res.status(200).send("OK");
 });
 
 // Handle unhandled promise rejections
