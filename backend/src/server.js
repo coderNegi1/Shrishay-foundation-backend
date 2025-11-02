@@ -15,7 +15,7 @@ connectDB();
 
 const PORT = process.env.PORT || 5000;
 app.get("/", (req, res) => {
-  res.send("✅ Shrishay Foundation Backend is Live!");
+  res.json({ status: "success", message: "Backend is running fine!" });
 });
 
 // Start server
